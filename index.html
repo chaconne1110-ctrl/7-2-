@@ -45,12 +45,9 @@ function checkLogin() {
     const id = document.getElementById('uid').value;
     const pw = document.getElementById('upw').value;
 
-    // 설정값: admin / 1234
     if(id === "admin" && pw === "1234") {
-        
-        // ** [수정 포인트] 이동하고 싶은 주소를 아래 따옴표 안에 넣으세요 **
-        const targetUrl = "file:///c%3A/Users/USER/Desktop/10000001_7%EC%A1%B0%2004.15_260415/project%281%29.html";
-        window.location.href = targetUrl;
+        // ✅ 상대경로로 수정
+        window.location.href = "project(1).html";
     } else {
         alert("아이디 또는 비밀번호가 틀렸습니다.");
     }
