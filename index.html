@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>전력공학 시스템 - 로그인</title>
+    <style>
+        body { margin: 0; font-family: Arial; background: #f4f6f8; display: flex; justify-content: center; align-items: center; height: 100vh; }
+        .login-card {
+            background: white; padding: 40px; border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1); width: 350px; text-align: center;
+        }
+        .login-card h1 { color: #1e3a5f; margin-bottom: 5px; }
+        .login-card p { color: #666; font-size: 0.9em; margin-bottom: 25px; }
+        .input-group { text-align: left; margin-bottom: 15px; }
+        .input-group label { display: block; font-size: 0.8em; color: #1e3a5f; font-weight: bold; margin-bottom: 5px; }
+        .input-group input { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; }
+        .login-btn { 
+            width: 100%; padding: 12px; background: #1e3a5f; color: white; 
+            border: none; border-radius: 6px; cursor: pointer; font-weight: bold; margin-top: 10px;
+        }
+        .login-btn:hover { background: #2c5282; }
+    </style>
+</head>
+<body>
+
+<div id="login-page">
+    <div class="login-card">
+        <h1>전력공학</h1>
+        <p>로그인 후 시스템을 이용하세요.</p>
+        <div class="input-group">
+            <label>아이디 (admin)</label>
+            <input type="text" id="uid" placeholder="아이디 입력">
+        </div>
+        <div class="input-group">
+            <label>비밀번호 (1234)</label>
+            <input type="password" id="upw" placeholder="비밀번호 입력">
+        </div>
+        <button class="login-btn" onclick="checkLogin()">로그인</button>
+    </div>
+</div>
+
+<script>
+function checkLogin() {
+    const id = document.getElementById('uid').value;
+    const pw = document.getElementById('upw').value;
+
+    // 설정값: admin / 1234
+    if(id === "admin" && pw === "1234") {
+        
+        // ** [수정 포인트] 이동하고 싶은 주소를 아래 따옴표 안에 넣으세요 **
+        const targetUrl = "file:///c%3A/Users/USER/Desktop/10000001_7%EC%A1%B0%2004.15_260415/project%281%29.html";
+        window.location.href = targetUrl;
+    } else {
+        alert("아이디 또는 비밀번호가 틀렸습니다.");
+    }
+}
+</script>
+
+</body>
+</html>

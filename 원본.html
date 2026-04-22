@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>전력공학</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial;
+    background: #f4f6f8;
+}
+
+header {
+    text-align: center;
+    background: #1e3a5f;
+    color: white;
+    padding: 30px;
+}
+
+header a {
+    color: yellow;
+    text-decoration: none;
+}
+
+.card-container {
+    display: flex;
+    gap: 20px;
+    padding: 30px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.card {
+    width: 220px;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: 0.2s;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+.card img {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+}
+
+.card h3 {
+    padding: 10px;
+    margin: 0;
+    text-align: center;
+}
+
+main {
+    padding: 20px;
+}
+
+section {
+    display: none;
+}
+
+section.active {
+    display: block;
+}
+
+.section-desc {
+    margin-top: 10px;
+    padding: 15px;
+    background: #e9eef5;
+    border-radius: 8px;
+    line-height: 1.6;
+}
+
+.sub-menu {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.sub-menu button {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    background: #2c5282;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.sub-menu button:hover {
+    background: #1a365d;
+}
+
+.sub-content {
+    margin-top: 15px;
+    padding: 15px;
+    background: white;
+    border-radius: 8px;
+    white-space: pre-line;
+}
+
+.sub-content b,
+.sub-content strong {
+    font-size: 2em;
+    font-weight: bold;
+    display: block;
+    margin-top: 10px;
+}
+
+.sub-content {
+    font-size: 1.1em;
+    line-height: 1.8;
+}
+</style>
+</head>
+
+<body>
+
+<audio id="bgm" loop>
+    <source src="bgm.mp3" type="audio/mpeg">
+</audio>
+
+<button id="musicBtn" style="
+position:fixed;
+bottom:20px;
+right:20px;
+padding:10px 15px;
+background:#2c5282;
+color:white;
+border:none;
+border-radius:8px;
+cursor:pointer;
+z-index:999;
+">
+🎵 음악 켜기
+</button>
+
+<audio id="bgm" loop>
+    <source src="유리 속 전류.mp3" type="audio/mpeg">
+</audio>
+
+<header>
+    <h1>전력공학</h1>
+    <h2>발전에서 배전까지</h2>
+    <button onclick="logout()" style="
+position:absolute;
+right:20px;
+top:20px;
+padding:8px 15px;
+background:#e53e3e;
+color:white;
+border:none;
+border-radius:6px;
+cursor:pointer;
+">로그아웃</button>
+</header>
+
+<div class="card-container">
+
+<div class="card" onclick="showSection('generation')">
+<img src="발전소.png">
+<h3>발전</h3>
+</div>
+
+<div class="card" onclick="showSection('transmission')">
+<img src="송전.png">
+<h3>송전</h3>
+</div>
+
+<div class="card" onclick="showSection('distribution')">
+<img src="배전.png">
+<h3>배전</h3>
+</div>
+
+<div class="card" onclick="showSection('final')">
+<img src="분전.png">
+<h3>분전</h3>
+</div>
+
+</div>
+
+<main>
+
+<section id="importance" class="active">
+<h3>실생활에서 중요한 이유</h3>
+<p>전력은 모든 전자기기와 산업의 핵심 에너지입니다.</p>
+</section>
+
+<section id="generation">
+<h3>발전</h3>
+<div class="section-desc">
+<b>목적:</b> 전기를 생산하는 단계<br>
+<b>특징:</b> 다양한 발전 방식 존재
+</div>
+<div class="sub-menu">
+<button onclick="showSub('gen',1)"><strong>1. 과거 vs 현재</strong></button>
+<button onclick="showSub('gen',2)"><strong>2. 화력과 원자력</strong></button>
+<button onclick="showSub('gen',3)"><strong>3. 신재생</strong></button>
+</div>
+<div id="gen-content" class="sub-content"></div>
+</section>
+
+<section id="transmission">
+<h3>송전</h3>
+<div class="section-desc">
+<strong>목적:</strong> 전기를 효율적·안정적으로 먼 거리까지 공급<br>
+<strong>특징:</strong> 고전압, 대용량, 교류 중심, 전력망 구조<br>
+&emsp;&emsp;송전은 발전소에서 생산된 전력을 먼 거리까지 전달하며, 
+전력 손실을 줄이기 위해 고전압을 사용한다.
+</div>
+<div class="sub-menu">
+<button onclick="showSub('trans',1)"><strong>1. AC/DC 차이</strong></button>
+<button onclick="showSub('trans',2)"><strong>2. 구성요소</strong></button>
+<button onclick="showSub('trans',3)"><strong>3. 손실/문제</strong></button>
+</div>
+<div id="trans-content" class="sub-content"></div>
+</section>
+
+<section id="distribution">
+<h3>배전</h3>
+<div class="section-desc">
+<b>목적:</b> 전기를 지역 단위로 나눠 공급<br>
+<b>특징:</b> 변전소를 통해 전압을 낮춤
+</div>
+<div class="sub-menu">
+<button onclick="showSub('dist',1)"><strong>1. 종류</strong></button>
+<button onclick="showSub('dist',2)"><strong>2. 설비구성</strong></button>
+<button onclick="showSub('dist',3)"><strong>3. 문제점 및 해결방안</strong></button>
+</div>
+<div id="dist-content" class="sub-content"></div>
+</section>
+
+<section id="final">
+<h3>분전</h3>
+<div class="section-desc">
+<b>목적:</b> 건물 내부로 전기 분배<br>
+<b>특징:</b> 분전반과 차단기로 안전 관리
+</div>
+<div class="sub-menu">
+<button onclick="showSub('final',1)"><strong>1. 구성요소</strong></button>
+<button onclick="showSub('final',2)"><strong>2. 종류</strong></button>
+<button onclick="showSub('final',3)"><strong>3. 안전수칙</strong></button>
+</div>
+<div id="final-content" class="sub-content"></div>
+</section>
+
+</main>
+
+<script>
+
+function showSection(id){
+document.querySelectorAll("section").forEach(sec => sec.classList.remove("active"));
+document.getElementById(id).classList.add("active");
+}
+
+function showSub(type, num){
+
+const data = {
+gen: [
+`과거 vs 현재 발전 변화
+
+[과거]
+- 화석 연료 중심
+- 중앙 집중형 발전
+- 일방적 공급
+
+[현재]
+- 신재생 확대
+- 분산형 전원
+- 스마트 그리드`,
+
+`화력 발전
+
+<img src="화력.png" width="600" height="300">
+
+[화력 발전 원리]
+1 연료 연소 → 열에너지 발생
+2 물 가열 → 고압 증기 생성
+3 터빈 회전 → 발전기 작동
+4 전자기 유도 → 전기 생산
+5 냉각 후 재순환
+
+장점
+- 안정적 공급
+- 출력 조절 용이
+
+단점
+- 환경오염
+- 연료 고갈
+
+원자력 발전
+
+<img src="원자력.png" width="600" height="300">
+
+[원자력 발전 원리]
+- 핵분열 → 열 발생 → 증기 → 터빈 → 발전
+
+장점
+- 높은 효율
+- 탄소 배출 적음
+
+단점
+- 방사성 폐기물
+- 사고 위험`,
+
+`신재생 에너지
+
+<img src="태양광.png" width="600" height="300">
+- 태양광: 빛 → 전기
+<img src="풍력.png" width="600" height="300">
+- 풍력: 바람 → 터빈
+<img src="수력.png" width="600" height="300">
+- 수력: 물 → 에너지
+
+장점
+- 친환경
+- 지속 가능
+
+단점
+- 출력 불안정`
+],
+
+trans: [
+`교류 송전 vs 직류 송전
+
+[교류 송전 AC]
+전류 방향과 크기가 주기적으로 변함
+
+장점
+- 전압 변환 쉬움
+- 시스템 간단
+- 기존 전력망과 호환
+
+단점
+- 장거리 손실 큼
+- 해저 송전 불리
+
+활용
+- 도시, 가정, 공장 전력 공급
+
+[직류 송전 DC]
+전류 방향이 일정하게 흐름
+
+장점
+- 장거리 송전 손실 적음
+- 해저 및 지중 송전에 유리
+- 대용량 송전에 적합
+
+단점
+- 전압 변환 복잡
+- 초기 설치 비용 높음
+
+활용
+- 장거리 송전
+- 해저 케이블 송전
+- 국가 간 전력 연결`,
+
+`송전선로 구성요소
+
+<img src="도체.png" width="500" height="300">
+- 전선: 전류 흐름
+
+<img src="지지물.png" width="500" height="300">
+- 철탑: 전선 지지
+
+<img src="애자.png" width="500" height="300">
+- 애자: 절연 역할
+
+<img src="가공지선.png" width="500" height="300">
+- 가공지선: 낙뢰 보호
+
+<img src="변전소.png" width="500" height="300">
+- 변전소: 전압 조절
+
+<img src="댐퍼.png" width="500" height="300">
+- 접지 설비: 이상 전류 방출`,
+
+`송전 손실 및 문제
+
+<img src="낙뢰.png" width="500" height="300">&emsp;<img src="코로나.png" width="500" height="300">
+- 낙뢰
+- 코로나 현상
+- I²R 손실
+- 유도 장애
+- 누설 전류
+- 절연 열화
+
+해결 방법
+- 고전압 송전
+- 절연 강화
+- 피뢰 설비
+- 접지 시스템`
+],
+
+dist: [
+`변전소
+
+[목적]
+- 발전소에서 생산된 전력을 수용가(가정, 공장 등)에 안정적으로 공급
+- 전압을 적절한 수준으로 낮춰 안전하게 전달
+- 전력 품질(전압, 주파수 등) 유지
+
+[특징]
+- 송전에 비해 저전압, 대전류 방식
+- 수용가와 직접 연결되는 최종 단계
+- 부하 변동이 크고 다양함
+- 고장 발생 시 영향 범위가 비교적 작음 (국지적 영향)`,
+
+`배전선
+
+[배전 방식의 종류]
+
+<img src="배전1.png" width="500" height="300">
+<img src="배전2.png" width="500" height="300">
+<img src="배전3.png" width="500" height="300">
+[방사상 배전 방식 (Radial System)]
+- 한 방향으로 전력을 공급
+- 구조가 단순하고 경제적
+- 신뢰도가 낮음 (고장 시 전체 정전)
+
+[환상형 배전 방식 (Ring System)]
+- 루프 형태로 구성
+- 한 구간 고장 시 다른 경로로 공급 가능
+- 신뢰도 향상
+
+[망상형 배전 방식 (Network System)]
+- 여러 경로로 연결된 복잡한 구조
+- 매우 높은 신뢰도
+- 비용이 많이 듦`,
+
+`공급
+
+[배전 설비 구성]
+
+[배전 변전소]
+- 송전 전압 → 배전 전압으로 변환
+
+[배전선로]
+- 전력을 수용가까지 전달하는 선로
+- 가공선 / 지중선
+
+[보호장치]
+- 차단기, 퓨즈 등
+- 고장 시 전력 차단
+
+[전압 조정 장치]
+- 전압 조정기, 콘덴서 등
+- 전압 안정 및 역률 개선
+
+
+[문제점]
+- 전압 강하 발생
+- 전력 손실 증가
+- 부하 불균형
+- 고장 및 정전 문제
+
+[개선 방안]
+- 적절한 전선 굵기 선정
+- 전압 조정 장치 설치
+- 자동화 시스템 도입 (스마트 그리드)
+- 분산 전원 활용 (태양광 등)`
+],
+
+final: [
+
+`1. 구성요소
+<img src="배전4.png" width="500" height="300">
+1. 전력 수용부 (Entrance)
+핵심 기기: 메인 차단기 (MCCB)
+역할: 외부에서 들어오는 전체 전원의 관문.
+기능: 건물 전체 전력 공급/차단 및 총량 초과 시 시스템 보호.
+
+2. 전력 분배부 (Bus-bar)
+핵심 기기: 부스바 (Bus-bar)
+역할: 전기가 지나가는 메인 도로.
+기능: 구리 막대를 통해 여러 개의 분기 차단기로 대용량 전류를 안정적으로 전달.
+
+3. 회로 보호부 (Protection)
+핵심 기기: 누전 차단기 (ELB) & 분기 차단기
+역할: 각 구역의 안전 파수꾼.
+기능: 누전, 합선, 과부하 감지 시 해당 구역만 즉시 차단하여 화재와 감전 예방.
+
+4. 접지 및 연결부 (Connection)
+핵심 기기: 단자대 & 접지 단자
+역할: 전선의 안전한 종착지.
+기능: 전선을 단단히 고정해 발열을 막고, 사고 전류를 땅으로 배출(접지)하여 인명 보호.`,
+
+`2. 종류
+<img src="주택분전.png" width="500" height="300">
+주택용 분전반: 아파트나 빌라 세대 내부에 설치되는 플라스틱/철제 함.<br><br>
+<img src="산업분전.png" width="500" height="300">
+산업용 분전반: 공장이나 대형 빌딩에서 기계 설비를 돌리기 위해 사용하는 대용량 함.<br><br>
+<img src="실외분전.png" width="500" height="300">
+실외용 분전반: 가로등이나 공사 현장에서 사용하는 방수형 함.`,
+
+`3. 안전수칙
+<img src="안전수칙.png" width="500" height="300">
+월 1회 점검: 차단기에 있는 노란색 또는 빨간색 버튼(Test 버튼)을 눌러 '탁' 소리와 함께 내려가는지 확인해야 한다.
+환경 유지: 분전반 앞에 짐을 쌓아두지 않는다. (화재 시 긴급 차단이 어려움)
+먼지 제거: 분전반 내부의 먼지는 트래킹(화재 유발) 현상의 원인이 되므로 주기적으로 청소한다.`
+]
+
+};
+
+document.getElementById(type + "-content").innerHTML = data[type][num-1];
+}
+
+function logout(){
+    window.location.href = "file:///c%3A/Users/USER/Desktop/10000001_7%EC%A1%B0%2004.15_260415/login.html";
+}
+
+const audio = document.getElementById("bgm");
+audio.volume = 0.3;
+
+window.addEventListener("click", function(){
+    audio.play();
+}, { once: true });
+
+
+</script>
+
+<script>
+const audio = document.getElementById("bgm");
+const btn = document.getElementById("musicBtn");
+
+audio.volume = 0.3;
+
+btn.addEventListener("click", function(){
+    if(audio.paused){
+        audio.play();
+        btn.innerText = "⏸ 음악 끄기";
+    } else {
+        audio.pause();
+        btn.innerText = "🎵 음악 켜기";
+    }
+});
+</script>
+
+</body>
+</html>
